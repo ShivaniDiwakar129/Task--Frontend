@@ -52,41 +52,41 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div className="dashboard-layout">
-            <header className="dashboard-header">
+        <div className="dashboard-layout animate-fade-in">
+            <header className="dashboard-header animate-fade-in stagger-1">
                 <div>
-                    <h1 className="auth-title" style={{textAlign: 'left', marginBottom: 0}}>Admin Dashboard</h1>
-                    <p className="auth-subtitle" style={{textAlign: 'left', marginBottom: 0}}>Welcome, {user?.name}</p>
+                    <h1 className="auth-title" style={{textAlign: 'left', marginBottom: '0.25rem'}}>Admin Dashboard</h1>
+                    <p className="auth-subtitle" style={{textAlign: 'left', marginBottom: 0}}>Welcome back, {user?.name}</p>
                 </div>
-                <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
-                    <span className="role-badge admin">Admin</span>
-                    <button className="auth-button logout-btn" style={{marginTop: 0, padding: '0.5rem 1rem'}} onClick={logout}>Log Out</button>
+                <div style={{display: 'flex', gap: '1.5rem', alignItems: 'center'}}>
+                    <span className="role-badge admin">Administrator</span>
+                    <button className="auth-button secondary" style={{marginTop: 0, padding: '0.6rem 1.5rem'}} onClick={logout}>Sign Out</button>
                 </div>
             </header>
 
             {analytics && (
-                <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem'}}>
-                    <div className="project-card" style={{padding: '1rem', textAlign: 'center'}}>
-                        <h3 style={{fontSize: '2rem', margin: 0, color: 'var(--primary-color)'}}>{analytics.totalTasks}</h3>
-                        <p style={{color: 'var(--text-secondary)', fontSize: '0.875rem'}}>Total Tasks</p>
+                <div className="stats-grid animate-fade-in stagger-2">
+                    <div className="stat-card">
+                        <h3 className="stat-value" style={{color: 'var(--accent-primary)'}}>{analytics.totalTasks}</h3>
+                        <p className="stat-label">Total Tasks</p>
                     </div>
-                    <div className="project-card" style={{padding: '1rem', textAlign: 'center'}}>
-                        <h3 style={{fontSize: '2rem', margin: 0, color: '#10b981'}}>{analytics.statusCounts.find(s => s._id === 'Done')?.count || 0}</h3>
-                        <p style={{color: 'var(--text-secondary)', fontSize: '0.875rem'}}>Tasks Done</p>
+                    <div className="stat-card">
+                        <h3 className="stat-value" style={{color: 'var(--success-color)'}}>{analytics.statusCounts.find(s => s._id === 'Done')?.count || 0}</h3>
+                        <p className="stat-label">Completed Tasks</p>
                     </div>
-                    <div className="project-card" style={{padding: '1rem', textAlign: 'center'}}>
-                        <h3 style={{fontSize: '2rem', margin: 0, color: '#ef4444'}}>{analytics.overdueTasks}</h3>
-                        <p style={{color: 'var(--text-secondary)', fontSize: '0.875rem'}}>Overdue Tasks</p>
+                    <div className="stat-card" style={{border: analytics.overdueTasks > 0 ? '1px solid rgba(244, 63, 94, 0.3)' : ''}}>
+                        <h3 className="stat-value" style={{color: 'var(--error-color)'}}>{analytics.overdueTasks}</h3>
+                        <p className="stat-label">Overdue Tasks</p>
                     </div>
                 </div>
             )}
 
-            <div className="dashboard-actions">
-                <h2 style={{fontSize: '1.25rem', fontWeight: 600}}>Projects</h2>
-                <button className="auth-button" style={{width: 'auto', marginTop: 0}} onClick={openCreateModal}>+ Create Project</button>
+            <div className="dashboard-actions animate-fade-in stagger-3">
+                <h2 style={{fontSize: '1.5rem', fontWeight: 700}}>Active Projects</h2>
+                <button className="auth-button" style={{width: 'auto', marginTop: 0, padding: '0.75rem 1.5rem'}} onClick={openCreateModal}>+ New Project</button>
             </div>
 
-            <div className="projects-grid">
+            <div className="projects-grid animate-fade-in stagger-4">
                 {projects.map(project => (
                     <div 
                         key={project._id} 
@@ -97,8 +97,8 @@ const AdminDashboard = () => {
                         <h3 className="project-title">{project.projectName}</h3>
                         <p className="project-desc">{project.description || 'No description provided.'}</p>
                         <div className="project-meta">
-                            <span>Created by: {project.createdBy?.name || 'Unknown'}</span>
-                            <span>Members: {project.members?.length || 0}</span>
+                            <span><strong style={{color:'var(--text-primary)', fontWeight:600}}>Created by:</strong> {project.createdBy?.name || 'Unknown'}</span>
+                            <span><strong style={{color:'var(--text-primary)', fontWeight:600}}>Team Members:</strong> {project.members?.length || 0}</span>
                         </div>
                         <div className="project-actions">
                             <button className="action-btn edit" onClick={(e) => openEditModal(e, project)}>Edit</button>
@@ -107,7 +107,9 @@ const AdminDashboard = () => {
                     </div>
                 ))}
                 {projects.length === 0 && (
-                    <p style={{color: 'var(--text-secondary)'}}>No projects found. Create one to get started.</p>
+                    <div className="project-card" style={{gridColumn: '1 / -1', textAlign: 'center', padding: '4rem'}}>
+                        <p style={{color: 'var(--text-secondary)', fontSize: '1.1rem'}}>No projects found. Create one to get started.</p>
+                    </div>
                 )}
             </div>
 

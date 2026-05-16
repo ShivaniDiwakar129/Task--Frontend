@@ -55,8 +55,8 @@ const ProjectModal = ({ closeModal, refreshProjects, editingProject }) => {
 
     return (
         <div className="modal-overlay">
-            <div className="auth-container" style={{maxWidth: '500px', animation: 'scaleIn 0.3s ease-out'}}>
-                <h2 className="auth-title">{editingProject ? 'Edit Project' : 'Create Project'}</h2>
+            <div className="auth-container" style={{maxWidth: '540px'}}>
+                <h2 className="auth-title" style={{fontSize: '1.75rem', marginBottom: '1.5rem'}}>{editingProject ? 'Edit Project' : 'Create Project'}</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label className="form-label">Project Name</label>
@@ -73,6 +73,7 @@ const ProjectModal = ({ closeModal, refreshProjects, editingProject }) => {
                         <textarea 
                             className="form-input" 
                             rows="3"
+                            style={{resize: 'vertical'}}
                             value={formData.description}
                             onChange={(e) => setFormData({...formData, description: e.target.value})}
                         />
@@ -86,7 +87,7 @@ const ProjectModal = ({ closeModal, refreshProjects, editingProject }) => {
                             placeholder="Search users by name or email..." 
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            style={{ marginBottom: '0.5rem' }}
+                            style={{ marginBottom: '1rem' }}
                         />
                         <div className="members-select-list">
                             {filteredUsers.map(u => (
@@ -96,16 +97,23 @@ const ProjectModal = ({ closeModal, refreshProjects, editingProject }) => {
                                         checked={formData.members.includes(u._id)}
                                         onChange={() => handleMemberToggle(u._id)}
                                     />
-                                    <span>{u.name} ({u.email})</span>
+                                    <span style={{fontSize: '0.9rem'}}>
+                                        <strong style={{color: 'var(--text-primary)'}}>{u.name}</strong> <span style={{color: 'var(--text-secondary)'}}>({u.email})</span>
+                                    </span>
                                 </label>
                             ))}
+                            {filteredUsers.length === 0 && (
+                                <div style={{padding: '1rem', textAlign: 'center', color: 'var(--text-secondary)'}}>
+                                    No users found
+                                </div>
+                            )}
                         </div>
                     </div>
 
-                    <div style={{display: 'flex', gap: '1rem', marginTop: '2rem'}}>
-                        <button type="button" className="auth-button logout-btn" style={{marginTop: 0}} onClick={closeModal}>Cancel</button>
+                    <div style={{display: 'flex', gap: '1rem', marginTop: '2.5rem'}}>
+                        <button type="button" className="auth-button secondary" style={{marginTop: 0}} onClick={closeModal}>Cancel</button>
                         <button type="submit" className="auth-button" style={{marginTop: 0}}>
-                            {editingProject ? 'Save Changes' : 'Create'}
+                            {editingProject ? 'Save Changes' : 'Create Project'}
                         </button>
                     </div>
                 </form>
