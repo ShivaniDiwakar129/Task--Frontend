@@ -16,9 +16,5 @@
     "react-dom": "^19.2.6",
     "react-router-dom": "^7.15.1",
     "vite": "^8.0.13"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^6.0.2",
-    "vite": "^8.0.13"
   }
 }
